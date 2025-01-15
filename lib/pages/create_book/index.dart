@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CreateBookScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
     final authorController = useTextEditingController();
@@ -78,47 +79,60 @@ class CreateBookScreen extends HookWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: titleController,
-              decoration: InputDecoration(
-                labelText: 'Tiêu đề',
-                hintText: 'Nhập tiêu đề sách',
-                errorText: titleError.value,
+            Expanded(
+                child: Column(
+              children: [
+                TextField(
+                  controller: titleController,
+                  decoration: InputDecoration(
+                    labelText: 'Tiêu đề',
+                    hintText: 'Nhập tiêu đề sách',
+                    errorText: titleError.value,
+                  ),
+                ),
+                SizedBox(height: 16.0.sp),
+                TextField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(
+                    labelText: 'Mô tả',
+                    hintText: 'Nhập mô tả sách',
+                    errorText: descriptionError.value,
+                  ),
+                  maxLines: 3,
+                ),
+                SizedBox(height: 16.0.sp),
+                TextField(
+                  controller: authorController,
+                  decoration: InputDecoration(
+                    labelText: 'Tác giả',
+                    hintText: 'Nhập tên tác giả',
+                    errorText: authorError.value,
+                  ),
+                ),
+                SizedBox(height: 16.0.sp),
+                TextField(
+                  controller: quantityController,
+                  decoration: InputDecoration(
+                    labelText: 'Số lượng',
+                    hintText: 'Nhập số lượng sách',
+                    errorText: quantityError.value,
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(height: 32.0.sp),
+              ],
+            )),
+            Container(
+              width: width,
+              child: ElevatedButton(
+                onPressed: submitForm,
+                child: Text('Thêm Mới'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0.sp),
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 16.0.sp),
-            TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Mô tả',
-                hintText: 'Nhập mô tả sách',
-                errorText: descriptionError.value,
-              ),
-              maxLines: 3,
-            ),
-            SizedBox(height: 16.0.sp),
-            TextField(
-              controller: authorController,
-              decoration: InputDecoration(
-                labelText: 'Tác giả',
-                hintText: 'Nhập tên tác giả',
-                errorText: authorError.value,
-              ),
-            ),
-            SizedBox(height: 16.0.sp),
-            TextField(
-              controller: quantityController,
-              decoration: InputDecoration(
-                labelText: 'Số lượng',
-                hintText: 'Nhập số lượng sách',
-                errorText: quantityError.value,
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 32.0.sp),
-            ElevatedButton(
-              onPressed: submitForm,
-              child: Text('Thêm Mới'),
             ),
           ],
         ),
