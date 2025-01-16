@@ -15,8 +15,6 @@ class RouterManager {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     HookWidget screen = NullScreen();
 
-    print(settings.name);
-
     switch (settings.name) {
       case RouterName.createBook:
         screen = CreateBookScreen();
@@ -25,12 +23,13 @@ class RouterManager {
         screen = UpdateBookScreen();
         break;
       case RouterName.detailBook:
-        screen = DetailBookScreen();
+        screen = DetailBookScreen(args: settings.arguments as ArgsDetailBook);
         break;
       case RouterName.detailBorrowBook:
         screen = DetailBorrowBookHistoryScreen();
       case RouterName.appBar:
         screen = AppBarLayout();
+        break;
     }
 
     return MaterialPageRoute(builder: (context) {

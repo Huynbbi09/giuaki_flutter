@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qltv/bloc/book_blob/bloc.dart';
+import 'package:qltv/bloc/book_blob/event.dart';
+import 'package:qltv/enity/book.dart';
+import 'package:qltv/routers/index.dart';
 
 class CreateBookScreen extends HookWidget {
   @override
@@ -10,11 +15,15 @@ class CreateBookScreen extends HookWidget {
     final descriptionController = useTextEditingController();
     final authorController = useTextEditingController();
     final quantityController = useTextEditingController();
+    final selectedCategory = useState<String?>(null);
 
     final titleError = useState<String?>(null);
     final descriptionError = useState<String?>(null);
     final authorError = useState<String?>(null);
     final quantityError = useState<String?>(null);
+    final categoryError = useState<String?>(null);
+
+    final bookBloc = BlocProvider.of<BookBloc>(context);
 
     bool validateForm() {
       bool isValid = true;
@@ -48,6 +57,13 @@ class CreateBookScreen extends HookWidget {
         quantityError.value = null;
       }
 
+      if (selectedCategory.value == null) {
+        categoryError.value = "Vui lòng chọn loại sách";
+        isValid = false;
+      } else {
+        categoryError.value = null;
+      }
+
       return isValid;
     }
 
@@ -57,16 +73,24 @@ class CreateBookScreen extends HookWidget {
         final description = descriptionController.text;
         final author = authorController.text;
         final quantity = int.parse(quantityController.text);
+        // final category = selectedCategory.value!;
 
-        print('Tiêu đề: $title');
-        print('Mô tả: $description');
-        print('Tác giả: $author');
-        print('Số lượng: $quantity');
+        bookBloc.add(AddBook(Book(
+          id: 0,
+          title: title,
+          description: description,
+          author: author,
+          quantity: quantity,
+          // category: category,
+        )));
 
         titleController.clear();
         descriptionController.clear();
         authorController.clear();
         quantityController.clear();
+        selectedCategory.value = null;
+
+        rootNavigatorKey.currentState!.pop();
       }
     }
 
@@ -80,48 +104,69 @@ class CreateBookScreen extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-                child: Column(
-              children: [
-                TextField(
-                  controller: titleController,
-                  decoration: InputDecoration(
-                    labelText: 'Tiêu đề',
-                    hintText: 'Nhập tiêu đề sách',
-                    errorText: titleError.value,
+              child: Column(
+                children: [
+                  TextField(
+                    controller: titleController,
+                    decoration: InputDecoration(
+                      labelText: 'Tiêu đề',
+                      hintText: 'Nhập tiêu đề sách',
+                      errorText: titleError.value,
+                    ),
                   ),
-                ),
-                SizedBox(height: 16.0.sp),
-                TextField(
-                  controller: descriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Mô tả',
-                    hintText: 'Nhập mô tả sách',
-                    errorText: descriptionError.value,
+                  SizedBox(height: 16.0.sp),
+                  TextField(
+                    controller: descriptionController,
+                    decoration: InputDecoration(
+                      labelText: 'Mô tả',
+                      hintText: 'Nhập mô tả sách',
+                      errorText: descriptionError.value,
+                    ),
+                    maxLines: 3,
                   ),
-                  maxLines: 3,
-                ),
-                SizedBox(height: 16.0.sp),
-                TextField(
-                  controller: authorController,
-                  decoration: InputDecoration(
-                    labelText: 'Tác giả',
-                    hintText: 'Nhập tên tác giả',
-                    errorText: authorError.value,
+                  SizedBox(height: 16.0.sp),
+                  TextField(
+                    controller: authorController,
+                    decoration: InputDecoration(
+                      labelText: 'Tác giả',
+                      hintText: 'Nhập tên tác giả',
+                      errorText: authorError.value,
+                    ),
                   ),
-                ),
-                SizedBox(height: 16.0.sp),
-                TextField(
-                  controller: quantityController,
-                  decoration: InputDecoration(
-                    labelText: 'Số lượng',
-                    hintText: 'Nhập số lượng sách',
-                    errorText: quantityError.value,
+                  SizedBox(height: 16.0.sp),
+                  TextField(
+                    controller: quantityController,
+                    decoration: InputDecoration(
+                      labelText: 'Số lượng',
+                      hintText: 'Nhập số lượng sách',
+                      errorText: quantityError.value,
+                    ),
+                    keyboardType: TextInputType.number,
                   ),
-                  keyboardType: TextInputType.number,
-                ),
-                SizedBox(height: 32.0.sp),
-              ],
-            )),
+                  SizedBox(height: 16.0.sp),
+                  DropdownButtonFormField<String>(
+                    value: selectedCategory.value,
+                    items: [
+                      DropdownMenuItem(
+                          value: 'Khoa học', child: Text('Khoa học')),
+                      DropdownMenuItem(
+                          value: 'Tiểu thuyết', child: Text('Tiểu thuyết')),
+                      DropdownMenuItem(
+                          value: 'Lịch sử', child: Text('Lịch sử')),
+                      DropdownMenuItem(value: 'Khác', child: Text('Khác')),
+                    ],
+                    onChanged: (value) {
+                      selectedCategory.value = value;
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Loại sách',
+                      errorText: categoryError.value,
+                    ),
+                  ),
+                  SizedBox(height: 32.0.sp),
+                ],
+              ),
+            ),
             Container(
               width: width,
               child: ElevatedButton(
