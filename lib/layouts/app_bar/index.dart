@@ -65,14 +65,14 @@ class AppBarLayout extends HookWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TabCustom(
-                  url: "assets/icons/book-svgrepo-com.svg",
+                  url: "assets/icons/user-plus-rounded-svgrepo-com.svg",
                   active: curUrl.value == RouterName.appBarManagerStudent
                       ? true
                       : false,
                   onTab: () => changeScreen(RouterName.appBarManagerStudent),
                 ),
                 TabCustom(
-                  url: "assets/icons/setting-5-svgrepo-com.svg",
+                  url: "assets/icons/setting-3-svgrepo-com.svg",
                   active:
                       curUrl.value == RouterName.appBarSetting ? true : false,
                   onTab: () => changeScreen(RouterName.appBarSetting),
