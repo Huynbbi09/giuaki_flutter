@@ -30,8 +30,6 @@ class AppBarLayout extends HookWidget {
       switch (settings.name) {
         case RouterName.appBarManagerStudent:
           return ManagerStudentScreen();
-        // case RouterName.appBarManagerBorrowBook:
-        //   return ManagerBorrowBookScreen();
         case RouterName.appBarSetting:
           return SettingsScreen();
         default:
@@ -42,63 +40,47 @@ class AppBarLayout extends HookWidget {
     double fullWidth = MediaQuery.of(context).size.width;
     double tabHeight = 50.0.sp;
 
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  width: fullWidth,
-                  child: Navigator(
-                    key: globalKey,
-                    initialRoute: RouterName.appBarManagerStudent,
-                    onGenerateRoute: (settings) {
-                      return MaterialPageRoute(
-                        builder: (context) => render(settings),
-                      );
-                    },
-                  ),
-                ),
+    return Container(
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              width: fullWidth,
+              child: Navigator(
+                key: globalKey,
+                initialRoute: RouterName.appBarManagerStudent,
+                onGenerateRoute: (settings) {
+                  return MaterialPageRoute(
+                    builder: (context) => render(settings),
+                  );
+                },
               ),
-              Container(
-                height: tabHeight,
-                width: fullWidth,
-                color: Color(0xFF0C0C0C),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TabCustom(
-                      url: "assets/icons/book-svgrepo-com.svg",
-                      active: curUrl.value == RouterName.appBarManagerStudent
-                          ? true
-                          : false,
-                      onTab: () =>
-                          changeScreen(RouterName.appBarManagerStudent),
-                    ),
-                    // TabCustom(
-                    //   url: "assets/icons/money-check-dollar-svgrepo-com.svg",
-                    //   active: curUrl.value == RouterName.appBarManagerBorrowBook
-                    //       ? true
-                    //       : false,
-                    //   onTab: () =>
-                    //       changeScreen(RouterName.appBarManagerBorrowBook),
-                    // ),
-                    TabCustom(
-                      url: "assets/icons/setting-5-svgrepo-com.svg",
-                      active: curUrl.value == RouterName.appBarSetting
-                          ? true
-                          : false,
-                      onTab: () => changeScreen(RouterName.appBarSetting),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-        // backgroundColor: Color(0xFF151517),
-        backgroundColor: Colors.white,
+          Container(
+            height: tabHeight,
+            width: fullWidth,
+            color: Color(0xFF0C0C0C),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TabCustom(
+                  url: "assets/icons/book-svgrepo-com.svg",
+                  active: curUrl.value == RouterName.appBarManagerStudent
+                      ? true
+                      : false,
+                  onTab: () => changeScreen(RouterName.appBarManagerStudent),
+                ),
+                TabCustom(
+                  url: "assets/icons/setting-5-svgrepo-com.svg",
+                  active:
+                      curUrl.value == RouterName.appBarSetting ? true : false,
+                  onTab: () => changeScreen(RouterName.appBarSetting),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

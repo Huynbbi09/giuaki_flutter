@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qltv/bloc/index.dart';
 import 'package:qltv/constant/router.dart';
 import 'package:qltv/routers/index.dart';
@@ -21,7 +22,7 @@ Future<void> main() async {
   });
 }
 
-class App extends StatelessWidget {
+class App extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -30,12 +31,16 @@ class App extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Navigator(
-            key: rootNavigatorKey,
-            initialRoute: RouterName.appBar,
-            onGenerateRoute: (settings) {
-              return RouterManager.onGenerateRoute(settings);
-            },
+          home: SafeArea(
+            child: Scaffold(
+              body: Navigator(
+                key: rootNavigatorKey,
+                initialRoute: RouterName.appBar,
+                onGenerateRoute: (settings) {
+                  return RouterManager.onGenerateRoute(settings);
+                },
+              ),
+            ),
           ),
         );
       },
