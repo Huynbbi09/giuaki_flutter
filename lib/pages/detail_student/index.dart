@@ -2,32 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qltv/bloc/book_blob/bloc.dart';
-import 'package:qltv/bloc/book_blob/event.dart';
-import 'package:qltv/enity/book.dart';
+import 'package:qltv/bloc/student_blob/bloc.dart';
+import 'package:qltv/bloc/student_blob/event.dart';
+import 'package:qltv/enity/student.dart';
 
-class DetailBookScreen extends HookWidget {
-  final ArgsDetailBook args;
+class DetailStudentScreen extends HookWidget {
+  final ArgsDetailStudent args;
 
-  DetailBookScreen({required this.args});
+  DetailStudentScreen({required this.args});
 
   @override
   Widget build(BuildContext context) {
-    final bookBloc = BlocProvider.of<BookBloc>(context);
+    final studentBloc = BlocProvider.of<StudentBloc>(context);
 
-    final bookDetail = (bookBloc.state.props as List<Book>).firstWhere(
-      (book) => book.id == args.id,
+    final studentDetail = (studentBloc.state.props as List<Student>).firstWhere(
+      (student) => student.id == args.id,
     );
 
     // Controllers for editing
-    final titleController = useTextEditingController(
-      text: bookDetail.title,
+    final nameController = useTextEditingController(
+      text: studentDetail.name,
     );
-    final authorController = useTextEditingController(
-      text: bookDetail.author,
+    final classNameController = useTextEditingController(
+      text: studentDetail.className,
     );
-    final descriptionController = useTextEditingController(
-      text: bookDetail.description,
+    final codeController = useTextEditingController(
+      text: studentDetail.code,
     );
 
     return Scaffold(
@@ -45,23 +45,23 @@ class DetailBookScreen extends HookWidget {
                   child: Column(
                 children: [
                   TextField(
-                    controller: titleController,
+                    controller: nameController,
                     decoration: InputDecoration(
-                      labelText: "Tiêu đề",
+                      labelText: "Tên sinh viên",
                     ),
                   ),
                   SizedBox(height: 8.0.sp),
                   TextField(
-                    controller: authorController,
+                    controller: classNameController,
                     decoration: InputDecoration(
-                      labelText: "Tác giả",
+                      labelText: "Lớp học",
                     ),
                   ),
                   SizedBox(height: 8.0.sp),
                   TextField(
-                    controller: descriptionController,
+                    controller: codeController,
                     decoration: InputDecoration(
-                      labelText: "Mô tả",
+                      labelText: "Mã sinh viên",
                     ),
                     maxLines: 3,
                   ),
@@ -73,7 +73,7 @@ class DetailBookScreen extends HookWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      bookBloc.add(DeleteBook(bookDetail.id));
+                      studentBloc.add(DeleteStudent(studentDetail.id));
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
@@ -93,12 +93,12 @@ class DetailBookScreen extends HookWidget {
                   ElevatedButton(
                     onPressed: () {
                       // Trigger update event
-                      final updatedBook = bookDetail.copyWith(
-                        title: titleController.text,
-                        author: authorController.text,
-                        description: descriptionController.text,
+                      final updatedStudent = studentDetail.copyWith(
+                        name: nameController.text,
+                        className: classNameController.text,
+                        code: codeController.text,
                       );
-                      bookBloc.add(UpdateBook(updatedBook));
+                      studentBloc.add(UpdateStudent(updatedStudent));
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
@@ -124,8 +124,8 @@ class DetailBookScreen extends HookWidget {
   }
 }
 
-class ArgsDetailBook {
+class ArgsDetailStudent {
   final int id;
 
-  ArgsDetailBook({required this.id});
+  ArgsDetailStudent({required this.id});
 }

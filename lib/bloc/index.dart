@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qltv/bloc/book_blob/bloc.dart';
-import 'package:qltv/bloc/book_blob/event.dart';
+import 'package:qltv/bloc/student_blob/bloc.dart';
+import 'package:qltv/bloc/student_blob/event.dart';
 
 class RootBloc extends MultiBlocProvider {
   final Widget child;
@@ -11,8 +11,8 @@ class RootBloc extends MultiBlocProvider {
     required this.child,
   }) : super(
           providers: [
-            BlocProvider<BookBloc>(
-              create: (context) => BookBloc()..add(LoadBooks()),
+            BlocProvider<StudentBloc>(
+              create: (context) => StudentBloc()..add(LoadStudents()),
             ),
           ],
           key: key,

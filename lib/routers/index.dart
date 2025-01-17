@@ -3,9 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qltv/constant/router.dart';
 import 'package:qltv/layouts/app_bar/index.dart';
 import 'package:qltv/layouts/root/index.dart';
-import 'package:qltv/pages/create_book/index.dart';
-import 'package:qltv/pages/detail_book/index.dart';
-import 'package:qltv/pages/detail_borrow_book_history/index.dart';
+import 'package:qltv/pages/create_student/index.dart';
+import 'package:qltv/pages/detail_student/index.dart';
 import 'package:qltv/pages/null/index.dart';
 import 'package:qltv/pages/update_book/index.dart';
 
@@ -16,17 +15,16 @@ class RouterManager {
     HookWidget screen = NullScreen();
 
     switch (settings.name) {
-      case RouterName.createBook:
-        screen = CreateBookScreen();
+      case RouterName.createStudent:
+        screen = CreateStudentScreen();
         break;
-      case RouterName.updateBook:
+      case RouterName.updateStudent:
         screen = UpdateBookScreen();
         break;
-      case RouterName.detailBook:
-        screen = DetailBookScreen(args: settings.arguments as ArgsDetailBook);
+      case RouterName.detailStudent:
+        screen =
+            DetailStudentScreen(args: settings.arguments as ArgsDetailStudent);
         break;
-      case RouterName.detailBorrowBook:
-        screen = DetailBorrowBookHistoryScreen();
       case RouterName.appBar:
         screen = AppBarLayout();
         break;

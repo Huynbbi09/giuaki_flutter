@@ -3,8 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qltv/components/tab_custom/index.dart';
 import 'package:qltv/constant/router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:qltv/pages/manager_book/index.dart';
-import 'package:qltv/pages/manager_borrow_book/index.dart';
+import 'package:qltv/pages/manager_student/index.dart';
 import 'package:qltv/pages/null/index.dart';
 import 'package:qltv/pages/setting/index.dart';
 
@@ -15,7 +14,7 @@ class AppBarLayout extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final curUrl = useState<String>(RouterName.appBarManagerBook);
+    final curUrl = useState<String>(RouterName.appBarManagerStudent);
 
     void changeScreen(String url) {
       curUrl.value = url;
@@ -29,10 +28,10 @@ class AppBarLayout extends HookWidget {
 
     HookWidget render(RouteSettings settings) {
       switch (settings.name) {
-        case RouterName.appBarManagerBook:
-          return ManagerBookScreen();
-        case RouterName.appBarManagerBorrowBook:
-          return ManagerBorrowBookScreen();
+        case RouterName.appBarManagerStudent:
+          return ManagerStudentScreen();
+        // case RouterName.appBarManagerBorrowBook:
+        //   return ManagerBorrowBookScreen();
         case RouterName.appBarSetting:
           return SettingsScreen();
         default:
@@ -53,7 +52,7 @@ class AppBarLayout extends HookWidget {
                   width: fullWidth,
                   child: Navigator(
                     key: globalKey,
-                    initialRoute: RouterName.appBarManagerBook,
+                    initialRoute: RouterName.appBarManagerStudent,
                     onGenerateRoute: (settings) {
                       return MaterialPageRoute(
                         builder: (context) => render(settings),
@@ -71,19 +70,20 @@ class AppBarLayout extends HookWidget {
                   children: [
                     TabCustom(
                       url: "assets/icons/book-svgrepo-com.svg",
-                      active: curUrl.value == RouterName.appBarManagerBook
-                          ? true
-                          : false,
-                      onTab: () => changeScreen(RouterName.appBarManagerBook),
-                    ),
-                    TabCustom(
-                      url: "assets/icons/money-check-dollar-svgrepo-com.svg",
-                      active: curUrl.value == RouterName.appBarManagerBorrowBook
+                      active: curUrl.value == RouterName.appBarManagerStudent
                           ? true
                           : false,
                       onTab: () =>
-                          changeScreen(RouterName.appBarManagerBorrowBook),
+                          changeScreen(RouterName.appBarManagerStudent),
                     ),
+                    // TabCustom(
+                    //   url: "assets/icons/money-check-dollar-svgrepo-com.svg",
+                    //   active: curUrl.value == RouterName.appBarManagerBorrowBook
+                    //       ? true
+                    //       : false,
+                    //   onTab: () =>
+                    //       changeScreen(RouterName.appBarManagerBorrowBook),
+                    // ),
                     TabCustom(
                       url: "assets/icons/setting-5-svgrepo-com.svg",
                       active: curUrl.value == RouterName.appBarSetting

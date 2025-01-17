@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qltv/components/button_custom/index.dart';
 import 'package:qltv/constant/router.dart';
-import 'package:qltv/enity/book.dart';
+import 'package:qltv/enity/student.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qltv/pages/detail_book/index.dart';
+import 'package:qltv/pages/detail_student/index.dart';
 import 'package:qltv/routers/index.dart';
 
-class BookComponent extends HookWidget {
-  final Book book;
+class StudentComponent extends HookWidget {
+  final Student student;
 
-  BookComponent({
+  StudentComponent({
     super.key,
-    required this.book,
+    required this.student,
   });
 
   void handleCreateBook() {
-    rootNavigatorKey.currentState!.pushNamed(RouterName.createBook);
+    rootNavigatorKey.currentState!.pushNamed(RouterName.createStudent);
   }
 
-  void detailBook(Book book) {
+  void detailBook(Student book) {
     rootNavigatorKey.currentState!.pushNamed(
-      RouterName.detailBook,
-      arguments: ArgsDetailBook(id: book.id),
+      RouterName.detailStudent,
+      arguments: ArgsDetailStudent(id: book.id),
     );
   }
 
@@ -45,16 +45,16 @@ class BookComponent extends HookWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  book.title,
+                  student.name,
                   style: TextStyle(fontSize: 18.0.sp),
                 ),
-                Text("Tác giả: ${book.author}"),
+                Text("Mã sinh viên: ${student.code}"),
               ],
             ),
             ButtonCustom(
               text: "Chi tiết",
               onPressed: () {
-                detailBook(book);
+                detailBook(student);
               },
             ),
           ],
