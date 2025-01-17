@@ -6,7 +6,6 @@ import 'package:qltv/layouts/root/index.dart';
 import 'package:qltv/pages/create_student/index.dart';
 import 'package:qltv/pages/detail_student/index.dart';
 import 'package:qltv/pages/null/index.dart';
-import 'package:qltv/pages/update_book/index.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -17,9 +16,6 @@ class RouterManager {
     switch (settings.name) {
       case RouterName.createStudent:
         screen = CreateStudentScreen();
-        break;
-      case RouterName.updateStudent:
-        screen = UpdateBookScreen();
         break;
       case RouterName.detailStudent:
         screen =

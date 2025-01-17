@@ -29,6 +29,15 @@ class DetailStudentScreen extends HookWidget {
     final codeController = useTextEditingController(
       text: studentDetail.code,
     );
+    final sb1Controller = useTextEditingController(
+      text: "${studentDetail.sb1}",
+    );
+    final sb2Controller = useTextEditingController(
+      text: "${studentDetail.sb2}",
+    );
+    final sb3Controller = useTextEditingController(
+      text: "${studentDetail.sb3}",
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -65,6 +74,33 @@ class DetailStudentScreen extends HookWidget {
                     ),
                     maxLines: 3,
                   ),
+                  // sb1
+                  SizedBox(height: 16.0.sp),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: sb1Controller,
+                    decoration: InputDecoration(
+                      labelText: "Điểm môn 1",
+                    ),
+                  ),
+                  // sb2
+                  SizedBox(height: 16.0.sp),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: sb2Controller,
+                    decoration: InputDecoration(
+                      labelText: "Điểm môn 2",
+                    ),
+                  ),
+                  // sb3
+                  SizedBox(height: 16.0.sp),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: sb3Controller,
+                    decoration: InputDecoration(
+                      labelText: "Điểm môn 3",
+                    ),
+                  ),
                   SizedBox(height: 16.0.sp),
                 ],
               )),
@@ -97,6 +133,9 @@ class DetailStudentScreen extends HookWidget {
                         name: nameController.text,
                         className: classNameController.text,
                         code: codeController.text,
+                        sb1: double.parse(sb1Controller.text),
+                        sb2: double.parse(sb2Controller.text),
+                        sb3: double.parse(sb3Controller.text),
                       );
                       studentBloc.add(UpdateStudent(updatedStudent));
                       Navigator.pop(context);

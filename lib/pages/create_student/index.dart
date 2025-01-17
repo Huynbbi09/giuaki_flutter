@@ -60,6 +60,9 @@ class CreateStudentScreen extends HookWidget {
           name: name,
           className: className,
           code: code,
+          sb1: 0.0,
+          sb2: 0.0,
+          sb3: 0.0,
         )));
 
         nameController.clear();
